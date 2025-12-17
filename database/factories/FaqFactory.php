@@ -2,22 +2,19 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Faq>
- */
 class FaqFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'category_id' => Category::factory(),
+            'question' => fake()->sentence() . '?',
+            'answer' => fake()->paragraph(5),
+            'order' => fake()->numberBetween(1, 20),
+            'is_published' => fake()->boolean(90),
         ];
     }
 }
