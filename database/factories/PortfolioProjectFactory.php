@@ -2,32 +2,22 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PortfolioProject>
+ */
 class PortfolioProjectFactory extends Factory
 {
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
-        $titles = [
-            'Kantoor Renovatie Brussel',
-            'Diepe Reiniging Antwerpen',
-            'Ramen Project Gent',
-            'Post-Bouw Schoonmaak Leuven',
-            'Zonnepanelen Reiniging Mechelen',
-            'Vloer Renovatie Hasselt',
-        ];
-
         return [
-            'category_id' => Category::factory(),
-            'title' => fake()->unique()->randomElement($titles),
-            'description' => fake()->paragraph(4),
-            'before_image' => 'portfolio/before-' . fake()->numberBetween(1, 10) . '.jpg',
-            'after_image' => 'portfolio/after-' . fake()->numberBetween(1, 10) . '.jpg',
-            'location' => fake()->city() . ', België',
-            'completed_at' => fake()->dateTimeBetween('-2 years', 'now'),
-            'is_featured' => fake()->boolean(20),
-            'likes_count' => fake()->numberBetween(0, 50),
+            //
         ];
     }
 }
