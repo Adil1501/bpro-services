@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TicketFactory extends Factory
@@ -19,14 +17,7 @@ class TicketFactory extends Factory
             'Extra dienst aanvragen',
         ];
 
-        $hasAssignment = fake()->boolean(60);
-
         return [
-            'user_id' => User::factory(),
-            'category_id' => Category::factory(),
-            'assigned_to' => $hasAssignment
-                ? User::where('role', 'admin')->inRandomOrder()->first()?->id
-                : null,
             'subject' => fake()->randomElement($subjects),
             'description' => fake()->paragraph(5),
             'priority' => fake()->randomElement(['low', 'medium', 'high', 'urgent']),

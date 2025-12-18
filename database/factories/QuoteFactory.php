@@ -11,10 +11,11 @@ class QuoteFactory extends Factory
     public function definition(): array
     {
         $hasUser = fake()->boolean(70);
+        $service = Service::inRandomOrder()->first();
 
         return [
-            'user_id' => $hasUser ? User::factory() : null,
-            'service_id' => Service::factory(),
+            'user_id' => $hasUser ? User::inRandomOrder()->first()?->id : null,
+            'service_id' => $service ? $service->id : Service::factory(),
             'name' => fake()->name(),
             'email' => fake()->safeEmail(),
             'phone' => fake()->phoneNumber(),

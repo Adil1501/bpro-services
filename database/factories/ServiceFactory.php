@@ -15,7 +15,7 @@ class ServiceFactory extends Factory
             ['name' => 'Vloeren Reinigen', 'icon' => 'fa-broom'],
             ['name' => 'Post-Renovatie', 'icon' => 'fa-hammer'],
             ['name' => 'Diepe Reiniging', 'icon' => 'fa-spray-can'],
-            ['name' => 'Schoonmaak bij verhuur en teruggave', 'icon' => 'fa-location'],
+            ['name' => 'Schoonmaak bij verhuur en teruggave', 'icon' => 'fa-rental'],
         ];
 
         $service = fake()->unique()->randomElement($services);

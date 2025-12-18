@@ -16,18 +16,21 @@ class PortfolioProjectFactory extends Factory
             'Post-Bouw Schoonmaak Leuven',
             'Schoonmaak Huurinkomsten/Uitgaven Mechelen',
             'Vloer Renovatie Hasselt',
+            'Showroom Schoonmaak Brugge',
+            'Restaurant Diepreiniging Kortrijk',
+            'Kantoor Glas Project Oostende',
+            'Winkel Renovatie Turnhout',
         ];
 
         return [
-            'category_id' => Category::factory(),
-            'title' => fake()->unique()->randomElement($titles),
+            'title' => fake()->randomElement($titles) . ' #' . rand(1, 999),
             'description' => fake()->paragraph(4),
             'before_image' => 'portfolio/before-' . fake()->numberBetween(1, 10) . '.jpg',
             'after_image' => 'portfolio/after-' . fake()->numberBetween(1, 10) . '.jpg',
             'location' => fake()->city() . ', België',
             'completed_at' => fake()->dateTimeBetween('-2 years', 'now'),
             'is_featured' => fake()->boolean(20),
-            'likes_count' => fake()->numberBetween(0, 50),
+            'likes_count' => 0,
         ];
     }
 }
