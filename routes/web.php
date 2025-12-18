@@ -22,3 +22,19 @@ Route::get('/admin/test', function() {
 })->middleware(['auth', 'admin']);
 
 require __DIR__.'/auth.php';
+
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])
+        ->name('dashboard');
+    Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+    Route::post('users/{user}/toggle-admin', [App\Http\Controllers\Admin\UserController::class, 'toggleAdmin'])
+        ->name('users.toggle-admin');
+    Route::resource('news', App\Http\Controllers\Admin\NewsController::class);
+    Route::resource('tags', App\Http\Controllers\Admin\TagController::class)
+        ->except(['show']);
+    Route::resource('faqs', App\Http\Controllers\Admin\FaqController::class);
+    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class)
+        ->except(['show']);
+    Route::resource('services', App\Http\Controllers\Admin\ServiceController::class);
+});
