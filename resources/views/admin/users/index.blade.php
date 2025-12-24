@@ -72,11 +72,11 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         @if($user->role === 'admin')
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
+                            <span class="px-2 inline-flex items-center text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
                                 <i class="fas fa-crown mr-1"></i> Admin
                             </span>
                         @else
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            <span class="px-2 inline-flex items-center text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                 <i class="fas fa-user mr-1"></i> User
                             </span>
                         @endif

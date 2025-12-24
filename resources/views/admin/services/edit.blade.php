@@ -94,13 +94,16 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         Status
                     </label>
+
+                    <input type="hidden" name="is_active" value="0">
+
                     <label class="inline-flex items-center px-4 py-2 bg-gray-50 rounded-lg cursor-pointer">
                         <input type="checkbox"
-                               name="is_active"
-                               value="1"
-                               {{ old('is_active', $service->is_active) ? 'checked' : '' }}
-                               class="rounded border-gray-300 text-blue-600">
-                        <span class="ml-2 text-sm text-gray-700">Actief</span>
+                            name="is_active"
+                            value="1"
+                            {{ old('is_active', $service->is_active) ? 'checked' : '' }}
+                            class="rounded border-gray-300 text-blue-600">
+                        <span class="ml-2 text-sm text-gray-700">Actief (zichtbaar voor klanten)</span>
                     </label>
                 </div>
             </div>

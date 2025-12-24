@@ -110,25 +110,44 @@
             <main class="flex-1 overflow-y-auto p-6">
 
                 @if(session('success'))
-                    <div class="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                        <span class="block sm:inline">{{ session('success') }}</span>
+                    <div class="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative flex justify-between items-center shadow-sm" role="alert">
+                        <div>
+                            <strong class="font-bold">Succes!</strong>
+                            <span class="block sm:inline ml-1">{{ session('success') }}</span>
+                        </div>
+                        <button onclick="this.parentElement.remove();" class="text-green-700 hover:text-green-900 font-bold ml-4 focus:outline-none">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                 @endif
 
                 @if(session('error'))
-                    <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                        <span class="block sm:inline">{{ session('error') }}</span>
+                    <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative flex justify-between items-center shadow-sm" role="alert">
+                        <div>
+                            <strong class="font-bold">Fout!</strong>
+                            <span class="block sm:inline ml-1">{{ session('error') }}</span>
+                        </div>
+                        <button onclick="this.parentElement.remove();" class="text-red-700 hover:text-red-900 font-bold ml-4 focus:outline-none">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                 @endif
 
                 @if($errors->any())
-                    <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-                        <strong class="font-bold">Er zijn fouten:</strong>
-                        <ul class="mt-2 list-disc list-inside">
-                            @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                    <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <strong class="font-bold">Er zijn fouten opgetreden:</strong>
+                                <ul class="mt-2 list-disc list-inside text-sm">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <button onclick="this.parentElement.parentElement.remove();" class="text-red-700 hover:text-red-900 font-bold ml-4 focus:outline-none">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
                     </div>
                 @endif
 

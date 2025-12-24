@@ -19,43 +19,51 @@
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     @forelse($services as $service)
-        <div class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-            <div class="p-6 {{ $service->is_active ? 'bg-gradient-to-r from-blue-500 to-blue-600' : 'bg-gray-400' }}">
-                <div class="flex items-center justify-between text-white">
-                    <div class="flex items-center">
-                        @if($service->icon)
-                            <i class="fas {{ $service->icon }} text-3xl mr-4"></i>
-                        @else
-                            <i class="fas fa-concierge-bell text-3xl mr-4"></i>
-                        @endif
-                        <div>
-                            <h3 class="text-xl font-bold">{{ $service->name }}</h3>
-                            <p class="text-sm opacity-90">{{ $service->slug }}</p>
+        <div class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden h-full flex flex-col">
+
+            <div class="h-32 p-6 flex items-center {{ $service->is_active ? 'bg-gradient-to-r from-blue-500 to-blue-600' : 'bg-gray-400' }}">
+                <div class="w-full flex items-center justify-between text-white">
+                    <div class="flex items-center flex-1 min-w-0">
+                        <div class="flex-shrink-0">
+                            @if($service->icon)
+                                <i class="fas {{ $service->icon }} text-3xl mr-4"></i>
+                            @else
+                                <i class="fas fa-concierge-bell text-3xl mr-4"></i>
+                            @endif
+                        </div>
+                        <div class="pr-2">
+                            <h3 class="text-xl font-bold leading-tight line-clamp-2 h-14 flex items-center">
+                                {{ $service->name }}
+                            </h3>
+                            <p class="text-sm opacity-90 truncate">{{ $service->slug }}</p>
                         </div>
                     </div>
-                    <span class="px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm font-semibold">
+                    <span class="px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm font-semibold whitespace-nowrap self-start">
                         #{{ $service->order }}
                     </span>
                 </div>
             </div>
 
-            <div class="p-6">
-                <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                    {{ $service->description }}
-                </p>
+            <div class="p-6 flex flex-col flex-grow">
 
-                <div class="flex items-center justify-between mb-4">
+                <div class="mb-4">
+                    <p class="text-gray-600 text-sm line-clamp-3 h-16">
+                        {{ $service->description }}
+                    </p>
+                </div>
+
+                <div class="flex items-center justify-between mb-4 mt-auto">
                     <div class="flex items-center text-sm text-gray-500">
                         <i class="fas fa-file-invoice mr-2 text-blue-600"></i>
                         <span>{{ $service->quotes_count }} {{ Str::plural('offerte', $service->quotes_count) }}</span>
                     </div>
 
                     @if($service->is_active)
-                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
+                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold whitespace-nowrap">
                             <i class="fas fa-check-circle mr-1"></i> Actief
                         </span>
                     @else
-                        <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-xs font-semibold">
+                        <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-xs font-semibold whitespace-nowrap">
                             <i class="fas fa-pause-circle mr-1"></i> Inactief
                         </span>
                     @endif
@@ -63,7 +71,7 @@
 
                 <div class="flex justify-between items-center pt-4 border-t border-gray-200">
                     <a href="{{ route('admin.services.edit', $service) }}"
-                       class="text-blue-600 hover:text-blue-900">
+                       class="text-blue-600 hover:text-blue-900 font-medium">
                         <i class="fas fa-edit mr-1"></i> Bewerken
                     </a>
 
@@ -74,8 +82,8 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                                class="text-red-600 hover:text-red-900"
-                                {{ $service->quotes_count > 0 ? 'disabled title=In gebruik bij offertes' : '' }}>
+                                class="text-red-600 hover:text-red-900 font-medium"
+                                {{ $service->quotes_count > 0 ? 'disabled title=In_gebruik_bij_offertes' : '' }}>
                             <i class="fas fa-trash mr-1"></i> Verwijderen
                         </button>
                     </form>

@@ -41,6 +41,12 @@ class NewsController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
         $validated['author_id'] = auth()->id();
 
+        if (empty($validated['published_at'])) {
+            $validated['published_at'] = now();
+        }
+
+        $validated['is_published'] = $request->has('is_published');
+
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('news', 'public');
         }
