@@ -41,4 +41,43 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class)
         ->except(['show']);
     Route::resource('services', App\Http\Controllers\Admin\ServiceController::class);
+    Route::resource('portfolios', \App\Http\Controllers\Admin\PortfolioController::class);
+    Route::post('portfolios/{portfolio}/toggle-featured', [\App\Http\Controllers\Admin\PortfolioController::class, 'toggleFeatured'])
+         ->name('portfolios.toggle-featured');
+        Route::get('quotes', [\App\Http\Controllers\Admin\QuoteController::class, 'index'])
+         ->name('quotes.index');
+    Route::get('quotes/{quote}', [\App\Http\Controllers\Admin\QuoteController::class, 'show'])
+         ->name('quotes.show');
+    Route::post('quotes/{quote}/status', [\App\Http\Controllers\Admin\QuoteController::class, 'updateStatus'])
+         ->name('quotes.update-status');
+    Route::post('quotes/{quote}/assign', [\App\Http\Controllers\Admin\QuoteController::class, 'assign'])
+         ->name('quotes.assign');
+    Route::post('quotes/{quote}/update-quote', [\App\Http\Controllers\Admin\QuoteController::class, 'updateQuote'])
+         ->name('quotes.update-quote');
+    Route::post('quotes/{quote}/comment', [\App\Http\Controllers\Admin\QuoteController::class, 'addComment'])
+         ->name('quotes.add-comment');
+    Route::post('quotes/{quote}/send', [\App\Http\Controllers\Admin\QuoteController::class, 'sendQuote'])
+         ->name('quotes.send');
+    Route::delete('quotes/{quote}', [\App\Http\Controllers\Admin\QuoteController::class, 'destroy'])
+         ->name('quotes.destroy');
+    Route::post('quotes/bulk-action', [\App\Http\Controllers\Admin\QuoteController::class, 'bulkAction'])
+         ->name('quotes.bulk-action');
+});
+
+Route::post('/portfolio/{portfolio}/like', [\App\Http\Controllers\PortfolioLikeController::class, 'toggle'])
+     ->name('portfolio.like')
+     ->middleware('auth');
+
+Route::get('/offerte-aanvragen', [\App\Http\Controllers\QuoteRequestController::class, 'create'])
+     ->name('quote.create');
+Route::post('/offerte-aanvragen', [\App\Http\Controllers\QuoteRequestController::class, 'store'])
+     ->name('quote.store');
+Route::get('/offerte-aanvragen/success', [\App\Http\Controllers\QuoteRequestController::class, 'success'])
+     ->name('quote.success');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/mijn-offertes', [\App\Http\Controllers\QuoteRequestController::class, 'myQuotes'])
+         ->name('quote.my-quotes');
+    Route::get('/mijn-offertes/{quote}', [\App\Http\Controllers\QuoteRequestController::class, 'showMyQuote'])
+         ->name('quote.show-my-quote');
 });

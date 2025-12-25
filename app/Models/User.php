@@ -52,7 +52,7 @@ class User extends Authenticatable
         return $this->hasMany(News::class, 'author_id');
     }
 
-    public function quotes()
+    public function quotes(): HasMany
     {
         return $this->hasMany(Quote::class);
     }
@@ -71,5 +71,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(PortfolioProject::class, 'portfolio_likes')
                     ->withTimestamps();
+    }
+
+    public function assignedQuotes(): HasMany
+    {
+    return $this->hasMany(Quote::class, 'assigned_to');
     }
 }

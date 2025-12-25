@@ -10,27 +10,31 @@ return new class extends Migration
     {
         Schema::create('quotes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('service_id');
-            $table->string('name', 255);
-            $table->string('email', 255);
-            $table->string('phone', 50);
-            $table->string('company_name', 255)->nullable();
-            $table->text('address')->nullable();
+
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->string('customer_name');
+            $table->string('customer_email');
+            $table->string('customer_phone');
+            $table->string('company_name')->nullable();
+            $table->foreignId('service_id')->nullable()->constrained()->onDelete('set null');
+            $table->text('description');
+            $table->string('address');
+            $table->string('city');
+            $table->string('postal_code');
             $table->integer('surface_area')->nullable();
             $table->date('preferred_date')->nullable();
-            $table->text('message')->nullable();
-            $table->enum('status', ['pending', 'reviewed', 'approved', 'rejected'])->default('pending');
+            $table->enum('urgency', ['low', 'normal', 'high'])->default('normal');
+            $table->json('images')->nullable();
+            $table->enum('status', ['new', 'in_progress', 'quoted', 'accepted', 'rejected', 'completed'])
+                  ->default('new');
+            $table->foreignId('assigned_to')->nullable()->constrained('users')->onDelete('set null');
             $table->text('admin_notes')->nullable();
+            $table->decimal('quoted_price', 10, 2)->nullable();
+            $table->text('quote_details')->nullable();
+            $table->date('quote_valid_until')->nullable();
             $table->timestamps();
-            $table->foreign('user_id')
-                  ->references('id')
-                  ->on('users')
-                  ->onDelete('cascade');
-            $table->foreign('service_id')
-                  ->references('id')
-                  ->on('services')
-                  ->onDelete('cascade');
+            $table->index(['status', 'created_at']);
+            $table->index('customer_email');
         });
     }
 

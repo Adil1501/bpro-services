@@ -73,6 +73,23 @@
                     <span class="ml-3">Diensten</span>
                 </a>
 
+                <a href="{{ route('admin.portfolios.index') }}"
+                class="flex items-center px-4 py-3 {{ request()->routeIs('admin.portfolios.*') ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-700' }} rounded-lg transition">
+                    <i class="fas fa-images w-5"></i>
+                    <span class="ml-3">Portfolio</span>
+                </a>
+
+                <a href="{{ route('admin.quotes.index') }}"
+                class="flex items-center px-4 py-3 {{ request()->routeIs('admin.quotes.*') ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-700' }} rounded-lg transition">
+                    <i class="fas fa-file-invoice w-5"></i>
+                    <span class="ml-3">Offerte Aanvragen</span>
+                    @if(\App\Models\Quote::where('status', 'new')->count() > 0)
+                        <span class="ml-auto px-2 py-1 bg-red-500 text-white text-xs rounded-full">
+                            {{ \App\Models\Quote::where('status', 'new')->count() }}
+                        </span>
+                    @endif
+                </a>
+
                 <hr class="border-gray-700 my-4">
 
                 <a href="{{ route('dashboard') }}"
