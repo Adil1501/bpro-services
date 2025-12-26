@@ -5,43 +5,55 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\News;
+use App\Models\Faq;
+use App\Models\Service;
+use App\Models\Portfolio;
 use App\Models\Quote;
-use App\Models\Ticket;
 use App\Models\ContactMessage;
-use App\Models\PortfolioProject;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         $stats = [
-            'total_users' => User::count(),
-            'total_news' => News::count(),
-            'pending_quotes' => Quote::where('status', 'pending')->count(),
-            'open_tickets' => Ticket::where('status', 'open')->count(),
-            'unread_messages' => ContactMessage::where('is_read', false)->count(),
-            'total_projects' => PortfolioProject::count(),
+            'users' => User::count(),
+            'news' => News::count(),
+            'faqs' => Faq::count(),
+            'services' => Service::count(),
+            'portfolio' => Portfolio::count(),
+            'quotes' => Quote::count(),
+            'contact_messages' => ContactMessage::count(),
         ];
 
-        $recent_quotes = Quote::with('service', 'user')
-            ->latest()
-            ->take(5)
-            ->get();
+        $pending = [
+            'new_quotes' => Quote::where('status', 'pending')->count(),
+            'new_contacts' => ContactMessage::where('is_read', false)->count(),
+            'draft_news' => News::where('is_published', false)->count(),
+        ];
 
-        $recent_tickets = Ticket::with('user', 'category')
-            ->latest()
-            ->take(5)
-            ->get();
+        $recent = [
+            'quotes' => Quote::with(['service'])
+                            ->latest()
+                            ->take(5)
+                            ->get(),
+            'contacts' => ContactMessage::latest()
+                                        ->take(5)
+                                        ->get(),
+            'news' => News::with('author')
+                          ->latest()
+                          ->take(5)
+                          ->get(),
+        ];
 
-        $recent_users = User::latest()
-            ->take(5)
-            ->get();
+        $charts = [
+            'quotes_by_status' => [
+                'pending' => Quote::where('status', 'pending')->count(),
+                'reviewed' => Quote::where('status', 'reviewed')->count(),
+                'approved' => Quote::where('status', 'approved')->count(),
+                'rejected' => Quote::where('status', 'rejected')->count(),
+            ],
+        ];
 
-        return view('admin.dashboard', compact(
-            'stats',
-            'recent_quotes',
-            'recent_tickets',
-            'recent_users'
-        ));
+        return view('admin.dashboard', compact('stats', 'pending', 'recent', 'charts'));
     }
 }

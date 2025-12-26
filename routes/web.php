@@ -86,6 +86,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         ->name('contact-messages.archive');
     Route::post('contact-messages/{contactMessage}/replied', [\App\Http\Controllers\Admin\ContactMessageController::class, 'markAsReplied'])
         ->name('contact-messages.mark-replied');
+    Route::get('settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])
+         ->name('settings.index');
+    Route::post('settings', [\App\Http\Controllers\Admin\SettingController::class, 'update'])
+         ->name('settings.update');
 });
 
 Route::post('/portfolio/{portfolio}/like', [\App\Http\Controllers\PortfolioLikeController::class, 'toggle'])
