@@ -10,12 +10,20 @@ return new class extends Migration
     {
         Schema::create('contact_messages', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255);
-            $table->string('email', 255);
-            $table->string('subject', 255);
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone')->nullable();
+            $table->string('subject');
             $table->text('message');
-            $table->boolean('is_read')->default(false);
+            $table->enum('status', ['new', 'read', 'archived'])->default('new');
+            $table->text('admin_notes')->nullable();
+            $table->foreignId('replied_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->timestamp('replied_at')->nullable();
+            $table->string('ip_address')->nullable();
+            $table->string('user_agent')->nullable();
             $table->timestamps();
+            $table->index(['status', 'created_at']);
+            $table->index('email');
         });
     }
 
