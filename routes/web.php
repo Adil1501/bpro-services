@@ -19,6 +19,8 @@ Route::get('/offerte-aanvragen/success', [App\Http\Controllers\QuoteRequestContr
 Route::post('/portfolio/{portfolio}/like', [App\Http\Controllers\PortfolioLikeController::class, 'toggle'])
      ->name('portfolio.like')
      ->middleware('auth');
+Route::get('/profile/{username}', [App\Http\Controllers\ProfileViewController::class, 'show'])
+     ->name('profile.show');
 
 
 Route::middleware(['auth', 'verified'])->group(function () {

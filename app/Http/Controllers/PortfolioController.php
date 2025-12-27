@@ -10,7 +10,7 @@ class PortfolioController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Portfolio::where('is_published', true);
+        $query = Portfolio::query();
 
         if ($request->filled('category')) {
             $query->where('category_id', $request->category);

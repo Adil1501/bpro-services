@@ -10,11 +10,9 @@ class FaqController extends Controller
     public function index()
     {
         $categories = Category::with(['faqs' => function($query) {
-            $query->where('is_active', true)->orderBy('order');
+            $query->orderBy('order');
         }])
-        ->whereHas('faqs', function($query) {
-            $query->where('is_active', true);
-        })
+        ->whereHas('faqs')
         ->orderBy('order')
         ->get();
 
