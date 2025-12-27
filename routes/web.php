@@ -3,29 +3,39 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/dashboard', function () {
-    if (auth()->user()->isAdmin()) {
-        return redirect()->route('admin.dashboard');
-    }
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/diensten', [App\Http\Controllers\ServiceController::class, 'index'])->name('services');
+Route::get('/diensten/{service:slug}', [App\Http\Controllers\ServiceController::class, 'show'])->name('services.show');
+Route::get('/portfolio', [App\Http\Controllers\PortfolioController::class, 'index'])->name('portfolio');
+Route::get('/nieuws', [App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
+Route::get('/nieuws/{news:slug}', [App\Http\Controllers\NewsController::class, 'show'])->name('news.show');
+Route::get('/faq', [App\Http\Controllers\FaqController::class, 'index'])->name('faq');
+Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
+Route::get('/offerte-aanvragen', [App\Http\Controllers\QuoteRequestController::class, 'create'])->name('quote.create');
+Route::post('/offerte-aanvragen', [App\Http\Controllers\QuoteRequestController::class, 'store'])->name('quote.store');
+Route::get('/offerte-aanvragen/success', [App\Http\Controllers\QuoteRequestController::class, 'success'])->name('quote.success');
+Route::post('/portfolio/{portfolio}/like', [App\Http\Controllers\PortfolioLikeController::class, 'toggle'])
+     ->name('portfolio.like')
+     ->middleware('auth');
 
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        if (auth()->user()->isAdmin()) {
+            return redirect()->route('admin.dashboard');
+        }
+        return view('dashboard');
+    })->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/mijn-offertes', [App\Http\Controllers\QuoteRequestController::class, 'myQuotes'])
+         ->name('quote.my-quotes');
+    Route::get('/mijn-offertes/{quote}', [App\Http\Controllers\QuoteRequestController::class, 'showMyQuote'])
+         ->name('quote.show-my-quote');
 });
-
-Route::get('/admin/test', function() {
-    return '<h1>Admin Test Pagina</h1><p>Als je dit ziet, werkt de middleware!</p>';
-})->middleware(['auth', 'admin']);
-
-require __DIR__.'/auth.php';
 
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -35,77 +45,53 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('users/{user}/toggle-admin', [App\Http\Controllers\Admin\UserController::class, 'toggleAdmin'])
         ->name('users.toggle-admin');
     Route::resource('news', App\Http\Controllers\Admin\NewsController::class);
-    Route::resource('tags', App\Http\Controllers\Admin\TagController::class)
-        ->except(['show']);
+    Route::resource('tags', App\Http\Controllers\Admin\TagController::class)->except(['show']);
     Route::resource('faqs', App\Http\Controllers\Admin\FaqController::class);
-    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class)
-        ->except(['show']);
+    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class)->except(['show']);
     Route::resource('services', App\Http\Controllers\Admin\ServiceController::class);
-    Route::resource('portfolios', \App\Http\Controllers\Admin\PortfolioController::class);
-    Route::post('portfolios/{portfolio}/toggle-featured', [\App\Http\Controllers\Admin\PortfolioController::class, 'toggleFeatured'])
+    Route::resource('portfolios', App\Http\Controllers\Admin\PortfolioController::class);
+    Route::post('portfolios/{portfolio}/toggle-featured', [App\Http\Controllers\Admin\PortfolioController::class, 'toggleFeatured'])
          ->name('portfolios.toggle-featured');
-    Route::get('quotes', [\App\Http\Controllers\Admin\QuoteController::class, 'index'])
+    Route::get('quotes', [App\Http\Controllers\Admin\QuoteController::class, 'index'])
          ->name('quotes.index');
-    Route::get('quotes/{quote}', [\App\Http\Controllers\Admin\QuoteController::class, 'show'])
+    Route::get('quotes/{quote}', [App\Http\Controllers\Admin\QuoteController::class, 'show'])
          ->name('quotes.show');
-    Route::post('quotes/{quote}/status', [\App\Http\Controllers\Admin\QuoteController::class, 'updateStatus'])
+    Route::post('quotes/{quote}/status', [App\Http\Controllers\Admin\QuoteController::class, 'updateStatus'])
          ->name('quotes.update-status');
-    Route::post('quotes/{quote}/assign', [\App\Http\Controllers\Admin\QuoteController::class, 'assign'])
+    Route::post('quotes/{quote}/assign', [App\Http\Controllers\Admin\QuoteController::class, 'assign'])
          ->name('quotes.assign');
-    Route::post('quotes/{quote}/update-quote', [\App\Http\Controllers\Admin\QuoteController::class, 'updateQuote'])
+    Route::post('quotes/{quote}/update-quote', [App\Http\Controllers\Admin\QuoteController::class, 'updateQuote'])
          ->name('quotes.update-quote');
-    Route::post('quotes/{quote}/comment', [\App\Http\Controllers\Admin\QuoteController::class, 'addComment'])
+    Route::post('quotes/{quote}/comment', [App\Http\Controllers\Admin\QuoteController::class, 'addComment'])
          ->name('quotes.add-comment');
-    Route::post('quotes/{quote}/send', [\App\Http\Controllers\Admin\QuoteController::class, 'sendQuote'])
+    Route::post('quotes/{quote}/send', [App\Http\Controllers\Admin\QuoteController::class, 'sendQuote'])
          ->name('quotes.send');
-    Route::delete('quotes/{quote}', [\App\Http\Controllers\Admin\QuoteController::class, 'destroy'])
+    Route::delete('quotes/{quote}', [App\Http\Controllers\Admin\QuoteController::class, 'destroy'])
          ->name('quotes.destroy');
-    Route::post('quotes/bulk-action', [\App\Http\Controllers\Admin\QuoteController::class, 'bulkAction'])
+    Route::post('quotes/bulk-action', [App\Http\Controllers\Admin\QuoteController::class, 'bulkAction'])
          ->name('quotes.bulk-action');
-        Route::get('contact-messages', [\App\Http\Controllers\Admin\ContactMessageController::class, 'index'])
+    Route::get('contact-messages', [App\Http\Controllers\Admin\ContactMessageController::class, 'index'])
          ->name('contact-messages.index');
-    Route::get('contact-messages/{contactMessage}', [\App\Http\Controllers\Admin\ContactMessageController::class, 'show'])
+    Route::get('contact-messages/{contactMessage}', [App\Http\Controllers\Admin\ContactMessageController::class, 'show'])
          ->name('contact-messages.show');
-    Route::post('contact-messages/{contactMessage}/notes', [\App\Http\Controllers\Admin\ContactMessageController::class, 'updateNotes'])
+    Route::post('contact-messages/{contactMessage}/notes', [App\Http\Controllers\Admin\ContactMessageController::class, 'updateNotes'])
          ->name('contact-messages.update-notes');
-    Route::post('contact-messages/{contactMessage}/mark-read', [\App\Http\Controllers\Admin\ContactMessageController::class, 'markAsRead'])
+    Route::post('contact-messages/{contactMessage}/mark-read', [App\Http\Controllers\Admin\ContactMessageController::class, 'markAsRead'])
          ->name('contact-messages.mark-read');
-    Route::post('contact-messages/{contactMessage}/mark-unread', [\App\Http\Controllers\Admin\ContactMessageController::class, 'markAsUnread'])
+    Route::post('contact-messages/{contactMessage}/mark-unread', [App\Http\Controllers\Admin\ContactMessageController::class, 'markAsUnread'])
          ->name('contact-messages.mark-unread');
-    Route::post('contact-messages/{contactMessage}/archive', [\App\Http\Controllers\Admin\ContactMessageController::class, 'archive'])
+    Route::post('contact-messages/{contactMessage}/archive', [App\Http\Controllers\Admin\ContactMessageController::class, 'archive'])
          ->name('contact-messages.archive');
-    Route::post('contact-messages/{contactMessage}/replied', [\App\Http\Controllers\Admin\ContactMessageController::class, 'markAsReplied'])
+    Route::post('contact-messages/{contactMessage}/replied', [App\Http\Controllers\Admin\ContactMessageController::class, 'markAsReplied'])
          ->name('contact-messages.mark-replied');
-    Route::delete('contact-messages/{contactMessage}', [\App\Http\Controllers\Admin\ContactMessageController::class, 'destroy'])
+    Route::delete('contact-messages/{contactMessage}', [App\Http\Controllers\Admin\ContactMessageController::class, 'destroy'])
          ->name('contact-messages.destroy');
-    Route::post('contact-messages/bulk-action', [\App\Http\Controllers\Admin\ContactMessageController::class, 'bulkAction'])
+    Route::post('contact-messages/bulk-action', [App\Http\Controllers\Admin\ContactMessageController::class, 'bulkAction'])
          ->name('contact-messages.bulk-action');
-    Route::post('contact-messages/{contactMessage}/notes', [\App\Http\Controllers\Admin\ContactMessageController::class, 'updateNotes'])
-     ->name('contact-messages.update-notes');
-    Route::post('contact-messages/{contactMessage}/archive', [\App\Http\Controllers\Admin\ContactMessageController::class, 'archive'])
-        ->name('contact-messages.archive');
-    Route::post('contact-messages/{contactMessage}/replied', [\App\Http\Controllers\Admin\ContactMessageController::class, 'markAsReplied'])
-        ->name('contact-messages.mark-replied');
-    Route::get('settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])
+    Route::get('settings', [App\Http\Controllers\Admin\SettingController::class, 'index'])
          ->name('settings.index');
-    Route::post('settings', [\App\Http\Controllers\Admin\SettingController::class, 'update'])
+    Route::post('settings', [App\Http\Controllers\Admin\SettingController::class, 'update'])
          ->name('settings.update');
 });
 
-Route::post('/portfolio/{portfolio}/like', [\App\Http\Controllers\PortfolioLikeController::class, 'toggle'])
-     ->name('portfolio.like')
-     ->middleware('auth');
-
-Route::get('/offerte-aanvragen', [\App\Http\Controllers\QuoteRequestController::class, 'create'])
-     ->name('quote.create');
-Route::post('/offerte-aanvragen', [\App\Http\Controllers\QuoteRequestController::class, 'store'])
-     ->name('quote.store');
-Route::get('/offerte-aanvragen/success', [\App\Http\Controllers\QuoteRequestController::class, 'success'])
-     ->name('quote.success');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/mijn-offertes', [\App\Http\Controllers\QuoteRequestController::class, 'myQuotes'])
-         ->name('quote.my-quotes');
-    Route::get('/mijn-offertes/{quote}', [\App\Http\Controllers\QuoteRequestController::class, 'showMyQuote'])
-         ->name('quote.show-my-quote');
-});
+require __DIR__.'/auth.php';
