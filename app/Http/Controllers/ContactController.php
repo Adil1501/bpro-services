@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactMessage;
+use App\Mail\ContactFormMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -26,7 +28,14 @@ class ContactController extends Controller
         $validated['ip_address'] = $request->ip();
         $validated['user_agent'] = $request->userAgent();
 
-        ContactMessage::create($validated);
+        $contactMessage = ContactMessage::create($validated);
+
+        try {
+            Mail::to(config('mail.from.address'))
+                ->send(new ContactFormMail($contactMessage));
+        } catch (\Exception $e) {
+            \Log::error('Failed to send contact form email: ' . $e->getMessage());
+        }
 
         return redirect()
             ->route('contact')
