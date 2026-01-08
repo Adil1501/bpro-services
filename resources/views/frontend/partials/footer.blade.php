@@ -90,30 +90,17 @@
             </div>
         </div>
 
-        <div class="border-t border-gray-800 mt-8 pt-8">
-            <div class="flex flex-col items-center justify-center text-center">
-
-                <div class="flex flex-wrap justify-center gap-4 mb-3">
-                    @php
-                        try {
-                            $vat = function_exists('setting') ? setting('business_vat') : \App\Models\Setting::get('business_vat');
-                            $kvk = function_exists('setting') ? setting('business_kvk') : \App\Models\Setting::get('business_kvk');
-                        } catch (\Exception $e) {
-                            $vat = $kvk = null;
-                        }
-                    @endphp
-
-                    @if($vat)
-                        <span class="text-gray-500 text-sm">BTW: {{ $vat }}</span>
-                    @endif
-                    @if($kvk)
-                        <span class="text-gray-500 text-sm">KvK: {{ $kvk }}</span>
-                    @endif
-                </div>
-
-                <p class="text-gray-400 text-sm">
-                    &copy; {{ date('Y') }} B-Pro Services. Alle rechten voorbehouden.
-                </p>
+        <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-400 text-sm">
+                &copy; {{ date('Y') }} B-Pro Services. Alle rechten voorbehouden.
+            </p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+                @if($vat = setting('business_vat'))
+                    <span class="text-gray-400 text-sm">BTW: {{ $vat }}</span>
+                @endif
+                @if($kvk = setting('business_kvk'))
+                    <span class="text-gray-400 text-sm">KvK: {{ $kvk }}</span>
+                @endif
             </div>
         </div>
     </div>
