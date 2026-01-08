@@ -10,31 +10,19 @@ return new class extends Migration
     {
         Schema::create('quotes', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-            $table->string('customer_name');
-            $table->string('customer_email');
-            $table->string('customer_phone');
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('service_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
             $table->string('company_name')->nullable();
-            $table->foreignId('service_id')->nullable()->constrained()->onDelete('set null');
-            $table->text('description');
             $table->string('address');
-            $table->string('city');
-            $table->string('postal_code');
-            $table->integer('surface_area')->nullable();
-            $table->date('preferred_date')->nullable();
-            $table->enum('urgency', ['low', 'normal', 'high'])->default('normal');
-            $table->json('images')->nullable();
-            $table->enum('status', ['new', 'in_progress', 'quoted', 'accepted', 'rejected', 'completed'])
-                  ->default('new');
-            $table->foreignId('assigned_to')->nullable()->constrained('users')->onDelete('set null');
+            $table->integer('surface_area');
+            $table->date('preferred_date');
+            $table->text('message')->nullable();
+            $table->enum('status', ['pending', 'reviewed', 'approved', 'rejected'])->default('pending');
             $table->text('admin_notes')->nullable();
-            $table->decimal('quoted_price', 10, 2)->nullable();
-            $table->text('quote_details')->nullable();
-            $table->date('quote_valid_until')->nullable();
             $table->timestamps();
-            $table->index(['status', 'created_at']);
-            $table->index('customer_email');
         });
     }
 

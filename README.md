@@ -29,7 +29,7 @@ Dit project is een dynamische, data-driven website voor een schoonmaakbedrijf me
 ## 🛠️ Technische Requirements
 
 ### Gebruikte Technologieën
-- **Framework**: Laravel 11.x
+- **Framework**: Laravel
 - **Frontend**: Tailwind CSS + Alpine.js
 - **Database**: MySQL
 - **Authentication**: Laravel Breeze
@@ -60,7 +60,7 @@ npm install
 
 3. **Environment configuratie**
 ```bash
-cp .env.example .env
+copy .env.example .env
 php artisan key:generate
 ```
 
@@ -141,6 +141,7 @@ Delen van deze applicatie zijn ontwikkeld met behulp van Claude voor:
 - Opstellen en structureren van code en documentatie (zoals deze README)
 - Advies over best practices in webontwikkeling, code-optimalisaties en toegankelijkheid.
 
+---
 
 Gemaakt door **Adil BENALI**
 Vak: Backend Web - Academiejaar 2025-2026

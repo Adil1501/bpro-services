@@ -24,6 +24,7 @@ return new class extends Migration
             $table->timestamps();
             $table->index(['status', 'created_at']);
             $table->index('email');
+            $table->boolean('is_read')->default(false);
         });
     }
 
