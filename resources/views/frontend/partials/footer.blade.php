@@ -106,8 +106,8 @@
                     @if($vat)
                         <span class="text-gray-500 text-sm">BTW: {{ $vat }}</span>
                     @endif
-                    @if($kvk)
-                        <span class="text-gray-500 text-sm">KvK: {{ $kvk }}</span>
+                    @if($ondnr)
+                        <span class="text-gray-500 text-sm">Ondernemingsnummer: {{ $ondnr }}</span>
                     @endif
                 </div>
 

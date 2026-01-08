@@ -1,59 +1,146 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# B-Pro Services - Laravel Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Een professionele website voor B-Pro Services, een schoonmaakbedrijf, gebouwd met Laravel.
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📋 Projectbeschrijving
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Dit project is een dynamische, data-driven website voor een schoonmaakbedrijf met een uitgebreid admin panel en klantportaal. Het systeem biedt functionaliteiten voor het beheren van diensten, portfolio items, offertes, nieuws, FAQ's en contactberichten.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## ✨ Belangrijkste Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Verplichte Features
+- **Login Systeem**: Volledige authenticatie met admin/user rollen
+- **Profielpagina's**: Publieke profielen met username, verjaardag, foto en bio
+- **Nieuws Beheer**: Admin kan nieuws CRUD, bezoekers kunnen lezen
+- **FAQ Systeem**: Georganiseerd per categorie met accordion functionaliteit
+- **Contact Formulier**: Met email notificaties naar admin
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Extra Features
+- **Admin Dashboard**: Overzichtelijk dashboard met statistieken
+- **Services Management**: CRUD voor schoonmaakdiensten
+- **Portfolio Systeem**: Voor/na foto's met like functionaliteit
+- **Offerte Systeem**: Klanten kunnen offertes aanvragen
+- **Settings Pagina**: Beheer website instellingen
+- **Google Maps Integratie**: Locatie weergave op contact pagina
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🛠️ Technische Requirements
 
-### Premium Partners
+### Gebruikte Technologieën
+- **Framework**: Laravel 11.x
+- **Frontend**: Tailwind CSS + Alpine.js
+- **Database**: MySQL
+- **Authentication**: Laravel Breeze
+- **File Storage**: Laravel Storage (local disk)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
 
-## Contributing
+## 🚀 Installatie
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Vereisten
+- PHP >= 8.2
+- Composer
+- Node.js & NPM
+- MySQL Database
 
-## Code of Conduct
+### Stappen
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. **Clone de repository**
+```bash
+git clone https://github.com/Adil1501/bpro-services
+cd bpro-services
+```
 
-## Security Vulnerabilities
+2. **Installeer dependencies**
+```bash
+composer install
+npm install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3. **Environment configuratie**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## License
+4. **Database configuratie**
+Pas `.env` aan met je database gegevens:
+```env
+DB_DATABASE=bpro_services
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+5. **Database setup**
+```bash
+php artisan migrate:fresh --seed
+```
+
+6. **Storage link**
+```bash
+php artisan storage:link
+```
+
+7. **Build assets**
+```bash
+npm run build
+```
+
+8. **Start server**
+```bash
+php artisan serve
+```
+
+Website: `http://127.0.0.1:8000`
+
+
+## 👤 Default Login Credentials
+
+### Admin Account
+- **Email**: admin@ehb.be
+- **Password**: Password!321
+
+### Test Klant Account
+- **Email**: klant@test.be
+- **Password**: password
+
+
+## 📧 Email Configuratie
+
+Voor email notificaties bij contactformulier:
+
+### Ontwikkeling (Mailtrap)
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your_username
+MAIL_PASSWORD=your_password
+```
+
+
+## 📚 Bronvermelding
+
+### Externe Libraries
+- [Laravel Framework](https://laravel.com) - MIT License
+- [Tailwind CSS](https://tailwindcss.com) - MIT License
+- [Alpine.js](https://alpinejs.dev) - MIT License
+- [Font Awesome](https://fontawesome.com) - Free License
+- [UI Avatars](https://ui-avatars.com) - Free Service
+
+### Code Inspiratie
+- Laravel Documentatie voor basis structuur
+- Tailwind UI voor design patterns
+- Stack Overflow voor specifieke problemen
+
+### AI Ondersteuning
+Delen van deze applicatie zijn ontwikkeld met behulp van Claude voor:
+- Brainstormen over oplossingsrichtingen voor specifieke programmeeruitdagingen.
+- Hulp bij het debuggen en het identificeren van logische fouten.
+- Opstellen en structureren van code en documentatie (zoals deze README)
+- Advies over best practices in webontwikkeling, code-optimalisaties en toegankelijkheid.
+
+
+Gemaakt door **Adil BENALI**
+Vak: Backend Web - Academiejaar 2025-2026
