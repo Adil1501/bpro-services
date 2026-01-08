@@ -23,7 +23,9 @@
                     <h1 class="text-4xl font-bold mb-2">{{ $user->name }}</h1>
 
                     @if($user->username)
-                        <p class="text-blue-200 text-lg mb-4">@{{ $user->username }}</p>
+                        <p class="text-blue-200 text-lg mb-4">
+                            <span class="opacity-70">@</span>{{ $user->username }}
+                        </p>
                     @endif
 
                     <div class="flex flex-wrap gap-4 justify-center md:justify-start text-blue-100">

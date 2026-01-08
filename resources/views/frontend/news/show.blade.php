@@ -34,7 +34,7 @@
                 @if($news->author)
                     <span class="flex items-center">
                         <i class="fas fa-user mr-2"></i>
-                        {{ $news->author }}
+                        {{ $news->author->name }}
                     </span>
                 @endif
             </div>

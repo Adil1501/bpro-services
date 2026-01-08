@@ -101,10 +101,6 @@ Website: `http://127.0.0.1:8000`
 - **Email**: admin@ehb.be
 - **Password**: Password!321
 
-### Test Klant Account
-- **Email**: klant@test.be
-- **Password**: password
-
 
 ## 📧 Email Configuratie
 

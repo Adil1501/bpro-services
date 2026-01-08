@@ -90,11 +90,13 @@
             </div>
         </div>
 
-        <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col items-center justify-center text-center">
+
             <p class="text-gray-400 text-sm">
                 &copy; {{ date('Y') }} B-Pro Services. Alle rechten voorbehouden.
             </p>
-            <div class="flex space-x-6 mt-4 md:mt-0">
+
+            <div class="flex space-x-6 mt-4">
                 @if($vat = setting('business_vat'))
                     <span class="text-gray-400 text-sm">BTW: {{ $vat }}</span>
                 @endif

@@ -76,11 +76,19 @@
                                 <span>Dashboard</span>
                             </a>
 
+                            @if(auth()->user()->username)
+                                <a href="{{ route('profile.show', auth()->user()->username) }}"
+                                class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+                                    <i class="fas fa-id-card w-5 mr-3"></i>
+                                    <span>Bekijk Profiel</span>
+                                </a>
+                            @endif
+
                             @if(!auth()->user()->isAdmin())
                                 <a href="{{ route('profile.edit') }}"
                                 class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
                                     <i class="fas fa-user-cog w-5 mr-3"></i>
-                                    <span>Profiel</span>
+                                    <span>Instellingen</span>
                                 </a>
                             @endif
 
@@ -152,11 +160,19 @@
                             Dashboard
                         </a>
 
+                        @if(auth()->user()->username)
+                            <a href="{{ route('profile.show', auth()->user()->username) }}"
+                            class="flex items-center text-gray-700 hover:text-blue-600 font-medium py-2 px-2">
+                                <i class="fas fa-id-card mr-3"></i>
+                                Bekijk Profiel
+                            </a>
+                        @endif
+
                         @if(!auth()->user()->isAdmin())
                             <a href="{{ route('profile.edit') }}"
                             class="flex items-center text-gray-700 hover:text-blue-600 font-medium py-2 px-2">
                                 <i class="fas fa-user-cog mr-3"></i>
-                                Profiel
+                                Instellingen
                             </a>
                         @endif
 

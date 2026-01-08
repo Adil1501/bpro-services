@@ -22,6 +22,7 @@
 
     <div class="flex h-screen overflow-hidden">
 
+        {{-- SIDEBAR --}}
         <aside class="w-72 bg-gray-900 text-white flex-shrink-0 flex flex-col transition-all duration-300">
 
             <div class="p-6 flex items-center border-b border-gray-800">
@@ -91,12 +92,15 @@
                         <span class="ml-2 font-medium">Diensten</span>
                     </a>
 
+                    {{-- Portfolio Check (voorkomt error als route nog niet bestaat) --}}
+                    @if(Route::has('admin.portfolios.index'))
                     <a href="{{ route('admin.portfolios.index') }}"
                        class="flex items-center px-3 py-2.5 rounded-lg transition-colors duration-200 mb-1
                               {{ request()->routeIs('admin.portfolios.*') ? 'bg-blue-600 text-white shadow-md' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
                         <i class="fas fa-images w-6 text-center"></i>
                         <span class="ml-2 font-medium">Portfolio</span>
                     </a>
+                    @endif
 
                     <a href="{{ route('admin.news.index') }}"
                        class="flex items-center px-3 py-2.5 rounded-lg transition-colors duration-200 mb-1
@@ -139,18 +143,22 @@
                         <span class="ml-2 font-medium">FAQs</span>
                     </a>
 
+                    {{-- INSTELLINGEN (Alleen tonen als de route bestaat) --}}
+                    @if(Route::has('admin.settings.index'))
                     <a href="{{ route('admin.settings.index') }}"
                        class="flex items-center px-3 py-2.5 rounded-lg transition-colors duration-200
                               {{ request()->routeIs('admin.settings.*') ? 'bg-blue-600 text-white shadow-md' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
                         <i class="fas fa-cog w-6 text-center"></i>
                         <span class="ml-2 font-medium">Instellingen</span>
                     </a>
+                    @endif
                 </div>
 
             </nav>
 
+            {{-- FIXED BUTTON ONDERAAN --}}
             <div class="p-4 border-t border-gray-800 bg-gray-900">
-                <a href="{{ route('dashboard') }}"
+                <a href="{{ url('/') }}" target="_blank"
                    class="flex items-center justify-center w-full px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition duration-200">
                     <i class="fas fa-external-link-alt text-sm mr-2"></i>
                     <span class="text-sm font-medium">Bekijk Website</span>
@@ -158,6 +166,7 @@
             </div>
         </aside>
 
+        {{-- MAIN CONTENT --}}
         <div class="flex-1 flex flex-col overflow-hidden relative">
 
             <header class="bg-white shadow-sm border-b border-gray-200 z-10">
